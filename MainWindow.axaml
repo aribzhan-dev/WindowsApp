@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Width="400" Height="200"
+        Title="Hello Avalonia">
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Name="buttonHello"
+                Content="Привет!"
+                Width="150"
+                Height="50"
+                Click="ButtonHello_Click"/>
+    </StackPanel>
+</Window>
+
+<!-- <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Width="400" Height="200"
+        Title="Изменение текста">
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+        <TextBlock Name="label1"
+                   Text="Нажми на кнопку"
+                   FontSize="18"
+                   HorizontalAlignment="Center"/>
+        <Button Content="Изменить текст"
+                Width="150"
+                Height="40"
+                Click="ButtonChangeText_Click"/>
+    </StackPanel>
+</Window> -->
+
+
+<!-- <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Width="400" Height="250"
+        Title="Определение возраста">
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+        <TextBlock Text="Введите свой возраст:" FontSize="16"/>
+        <TextBox Name="ageInput" Width="150" HorizontalAlignment="Center"/>
+        <Button Content="Показать результат"
+                Width="150"
+                Height="35"
+                Click="ButtonShowResult_Click"/>
+    </StackPanel>
+</Window> -->
