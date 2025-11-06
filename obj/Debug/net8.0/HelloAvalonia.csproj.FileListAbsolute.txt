@@ -74,3 +74,4 @@
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.pdb
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.genruntimeconfig.cache
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/ref/HelloAvalonia.dll
+/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.sourcelink.json
