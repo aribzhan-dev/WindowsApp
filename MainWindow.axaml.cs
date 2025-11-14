@@ -127,28 +127,179 @@
 
 
 
-using Avalonia.Controls;
-using Avalonia.Media;
+// using Avalonia.Controls;
+// using Avalonia.Media;
 
-namespace HelloAvalonia
-{
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//         }
 
-        private void GreenButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            this.Background = new SolidColorBrush(Colors.Green);
-            this.Title = "Цвет изменён на зелёный";
-        }
+//         private void GreenButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+//         {
+//             this.Background = new SolidColorBrush(Colors.Green);
+//             this.Title = "Цвет изменён на зелёный";
+//         }
 
-        private void BlueButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            this.Background = new SolidColorBrush(Colors.Blue);
-            this.Title = "Цвет изменён на синий";
-        }
-    }
-}
+//         private void BlueButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+//         {
+//             this.Background = new SolidColorBrush(Colors.Blue);
+//             this.Title = "Цвет изменён на синий";
+//         }
+//     }
+// }
+
+
+
+// Practic task 
+
+
+// using Avalonia.Controls;
+// using System;
+
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//         }
+
+//         private void Calc_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+//         {
+//             if (int.TryParse(YearBox.Text, out int year))
+//             {
+//                 int age = DateTime.Now.Year - year;
+//                 ResultText.Text = $"Ваш возраст: {age} лет";
+//             }
+//             else
+//             {
+//                 ResultText.Text = "Введите корректный год!";
+//             }
+//         }
+//     }
+// }
+
+
+
+
+
+
+// using Avalonia.Controls;
+// using Avalonia.Interactivity;
+
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//         }
+
+//         private void AnswerButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             if (RedRadio.IsChecked == true)
+//                 ResultLabel.Text = "Твой любимый цвет — Красный!";
+//             else if (BlueRadio.IsChecked == true)
+//                 ResultLabel.Text = "Твой любимый цвет — Синий!";
+//             else if (GreenRadio.IsChecked == true)
+//                 ResultLabel.Text = "Твой любимый цвет — Зелёный!";
+//             else
+//                 ResultLabel.Text = "Выберите цвет!";
+//         }
+//     }
+// }
+
+
+
+
+// using Avalonia.Controls;
+// using Avalonia.Interactivity;
+
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//         }
+
+//         private void GreetButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             string name = NameBox.Text.Trim();
+//             if (string.IsNullOrEmpty(name))
+//             {
+//                 ResultLabel.Text = "Введите имя!";
+//                 return;
+//             }
+
+//             if (LanguageBox.SelectedItem is ComboBoxItem selected)
+//             {
+//                 string lang = selected.Content.ToString();
+//                 switch (lang)
+//                 {
+//                     case "Русский":
+//                         ResultLabel.Text = $"Привет, {name}!";
+//                         break;
+//                     case "Английский":
+//                         ResultLabel.Text = $"Hello, {name}!";
+//                         break;
+//                     case "Казахский":
+//                         ResultLabel.Text = $"Сәлем, {name}!";
+//                         break;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+
+
+// using Avalonia.Controls;
+// using Avalonia.Interactivity;
+// using System;
+
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//         }
+
+//         private void CalculateButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             if (double.TryParse(Number1Box.Text, out double num1) &&
+//                 double.TryParse(Number2Box.Text, out double num2))
+//             {
+//                 double sum = num1 + num2;
+
+//                 if (DetailedCheck.IsChecked == true)
+//                 {
+//                     ResultLabel.Text = $"{num1} + {num2} = {sum}";
+//                 }
+//                 else
+//                 {
+//                     ResultLabel.Text = sum.ToString();
+//                 }
+//             }
+//             else
+//             {
+//                 ResultLabel.Text = "Введите корректные числа!";
+//             }
+//         }
+//     }
+// }
+
+
+
+

@@ -5,6 +5,10 @@
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.AssemblyInfoInputs.cache
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.AssemblyInfo.cs
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.csproj.CoreCompileInputs.cache
+/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.sourcelink.json
+/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.dll
+/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/refint/HelloAvalonia.dll
+/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.pdb
 /Users/admin/Desktop/HelloAvalonia/bin/Debug/net8.0/HelloAvalonia
 /Users/admin/Desktop/HelloAvalonia/bin/Debug/net8.0/HelloAvalonia.deps.json
 /Users/admin/Desktop/HelloAvalonia/bin/Debug/net8.0/HelloAvalonia.runtimeconfig.json
@@ -69,9 +73,5 @@
 /Users/admin/Desktop/HelloAvalonia/bin/Debug/net8.0/runtimes/win-x64/native/libSkiaSharp.dll
 /Users/admin/Desktop/HelloAvalonia/bin/Debug/net8.0/runtimes/win-x86/native/libSkiaSharp.dll
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAva.1FC47614.Up2Date
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.dll
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/refint/HelloAvalonia.dll
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.pdb
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.genruntimeconfig.cache
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/ref/HelloAvalonia.dll
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.sourcelink.json

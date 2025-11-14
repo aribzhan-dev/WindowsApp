@@ -80,7 +80,7 @@
 
 
 
-<Window xmlns="https://github.com/avaloniaui"
+<!-- <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="HelloAvalonia.MainWindow"
         Width="400" Height="200"
@@ -90,4 +90,107 @@
         <Button x:Name="GreenButton" Content="Сделать зелёным" Width="200" Click="GreenButton_Click"/>
         <Button x:Name="BlueButton" Content="Сделать синим" Width="200" Click="BlueButton_Click"/>
     </StackPanel>
-</Window>
+</Window> -->
+
+
+
+
+
+<!-- Practic task -->
+
+
+<!-- <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Калькулятор возраста"
+        Width="400" Height="220">
+
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Введите год рождения:"/>
+        <TextBox x:Name="YearBox" Width="150"/>
+        <Button Content="Рассчитать" Width="150" Click="Calc_Click"/>
+        <TextBlock x:Name="ResultText" FontWeight="Bold"/>
+    </StackPanel>
+</Window> -->
+
+
+
+
+
+
+<!-- <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Любимый цвет"
+        Width="300" Height="250">
+
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Какой твой любимый цвет?" />
+
+        <RadioButton x:Name="RedRadio" Content="Красный"/>
+        <RadioButton x:Name="BlueRadio" Content="Синий"/>
+        <RadioButton x:Name="GreenRadio" Content="Зелёный"/>
+
+        <Button Content="Ответить" Width="100" Click="AnswerButton_Click"/>
+        <TextBlock x:Name="ResultLabel" FontWeight="Bold"/>
+    </StackPanel>
+</Window> -->
+
+
+
+
+<!-- 
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Приветствие пользователя"
+        Width="300" Height="250">
+
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Введите ваше имя:"/>
+        <TextBox x:Name="NameBox" Width="150"/>
+
+        <TextBlock Text="Выберите язык:"/>
+        <ComboBox x:Name="LanguageBox" Width="150">
+            <ComboBoxItem Content="Русский"/>
+            <ComboBoxItem Content="Английский"/>
+            <ComboBoxItem Content="Казахский"/>
+        </ComboBox>
+
+        <Button Content="Поприветствовать" Width="150" Click="GreetButton_Click"/>
+        <TextBlock x:Name="ResultLabel" FontWeight="Bold"/>
+    </StackPanel>
+</Window> -->
+
+
+
+
+<!-- <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Калькулятор суммы"
+        Width="300" Height="250">
+
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Введите первое число:"/>
+        <TextBox x:Name="Number1Box" Width="150"/>
+
+        <TextBlock Text="Введите второе число:"/>
+        <TextBox x:Name="Number2Box" Width="150"/>
+
+        <CheckBox x:Name="DetailedCheck" Content="Показать вычисление подробно"/>
+
+        <Button Content="Посчитать" Width="100" Click="CalculateButton_Click"/>
+
+        <TextBlock x:Name="ResultLabel" FontWeight="Bold"/>
+    </StackPanel>
+</Window> -->
+
+
+
+
+
+
+
+
+
