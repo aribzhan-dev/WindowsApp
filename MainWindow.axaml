@@ -190,7 +190,63 @@
 
 
 
+<!-- Practic task 17. chat bot -->
 
+<!-- <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Chat Bot"
+        Width="400" Height="500">
+    <StackPanel Margin="10" Spacing="10">
+        <TextBlock Text="Chat Bot" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+        
+        <ScrollViewer Height="300" Background="Black">
+            <StackPanel x:Name="ChatPanel" Margin="5"/>
+        </ScrollViewer>
+
+        <TextBox x:Name="UserInputBox" Width="350" Watermark="Введите сообщение..."/>
+        
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Content="Отправить" Click="SendButton_Click" Width="100"/>
+            <Button Content="Очистить" Click="ClearButton_Click" Width="100"/>
+        </StackPanel>
+    </StackPanel>
+</Window> -->
+
+
+
+
+<!-- Practic task 6 -->
+
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Меню и Инструменты"
+        Width="600" Height="400">
+    <DockPanel>
+        <!-- Menu -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть" Click="Open_Click"/>
+                <MenuItem Header="Сохранить" Click="Save_Click"/>
+                <MenuItem Header="Выход" Click="Exit_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Toolbar -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5" Spacing="5">
+            <Button Content="Открыть" Click="Open_Click"/>
+            <Button Content="Сохранить" Click="Save_Click"/>
+            <Button Content="Выход" Click="Exit_Click"/>
+        </StackPanel>
+
+        <!-- TextBox with ScrollViewer -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <TextBox x:Name="MainTextBox" AcceptsReturn="True"/>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
 
 
 
