@@ -376,10 +376,7 @@
 
 
 // Practic task 6
-
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using System;
@@ -392,131 +389,101 @@ namespace HelloAvalonia
         {
             InitializeComponent();
             InitializeContextMenu();
-            SetupHotkeys(); // Hotkeys qo'shish
         }
 
-        // === CONTEXT MENU (o'ng tugma) ===
         private void InitializeContextMenu()
         {
             var ctx = new ContextMenu();
 
-            var copyItem = new MenuItem { Header = "Копировать" };
-            copyItem.Click += Copy_Click;
+            var copyItem = new MenuItem { Header = "Копировать", Tag="Copy" };
+            copyItem.Click += EditAction;
 
-            var cutItem = new MenuItem { Header = "Вырезать" };
-            cutItem.Click += Cut_Click;
+            var pasteItem = new MenuItem { Header = "Вставить", Tag="Paste" };
+            pasteItem.Click += EditAction;
 
-            var pasteItem = new MenuItem { Header = "Вставить" };
-            pasteItem.Click += Paste_Click;
-
-            var clearItem = new MenuItem { Header = "Очистить" };
-            clearItem.Click += Clear_Click;
+            var clearItem = new MenuItem { Header = "Очистить", Tag="Clear" };
+            clearItem.Click += EditAction;
 
             ctx.Items.Add(copyItem);
-            ctx.Items.Add(cutItem);
             ctx.Items.Add(pasteItem);
-            ctx.Items.Add(new Separator());
             ctx.Items.Add(clearItem);
 
             MainTextBox.ContextMenu = ctx;
         }
 
-        // === HOTKEYS (Ctrl+O, Ctrl+S, Ctrl+Q) ===
-        private void SetupHotkeys()
+        
+        private void FileAction(object? sender, RoutedEventArgs e)
         {
-            var openItem = this.FindControl<MenuItem>("OpenMenuItem");
-            var saveItem = this.FindControl<MenuItem>("SaveMenuItem");
-            var exitItem = this.FindControl<MenuItem>("ExitMenuItem");
-
-            if (openItem != null)
-                openItem.HotKey = new KeyGesture(Key.O, KeyModifiers.Control);
-
-            if (saveItem != null)
-                saveItem.HotKey = new KeyGesture(Key.S, KeyModifiers.Control);
-
-            if (exitItem != null)
-                exitItem.HotKey = new KeyGesture(Key.Q, KeyModifiers.Control);
-        }
-
-        // === FAYL MENU ===
-        private void Open_Click(object? sender, RoutedEventArgs e) => ShowMessage("Открыть файл");
-        private void Save_Click(object? sender, RoutedEventArgs e) => ShowMessage("Сохранить файл");
-        private void Exit_Click(object? sender, RoutedEventArgs e) => this.Close();
-
-        // === PRAVKA MENU ===
-        private void Copy_Click(object? sender, RoutedEventArgs e) => MainTextBox.Copy();
-        private void Cut_Click(object? sender, RoutedEventArgs e) => MainTextBox.Cut();
-        private void Paste_Click(object? sender, RoutedEventArgs e) => MainTextBox.Paste();
-        private void Clear_Click(object? sender, RoutedEventArgs e) => MainTextBox.Text = "";
-
-        // === VID MENU ===
-        private void LightBg_Click(object? sender, RoutedEventArgs e)
-        {
-            this.Background = Brushes.White;
-            MainTextBox.Background = Brushes.White;
-            MainTextBox.Foreground = Brushes.Black;
-        }
-
-        private void DarkBg_Click(object? sender, RoutedEventArgs e)
-        {
-            this.Background = Brushes.Black;
-            MainTextBox.Background = Brushes.Black;
-            MainTextBox.Foreground = Brushes.White;
-        }
-
-        private void Font_Click(object? sender, RoutedEventArgs e)
-        {
-            MainTextBox.FontSize = Math.Min(MainTextBox.FontSize + 2, 30); // maks 30
-        }
-
-        // === SPRAVKA ===
-        private void About_Click(object? sender, RoutedEventArgs e)
-        {
-            ShowMessage("Программа для демонстрации меню и инструментов\n\nAvalonia UI + C#");
-        }
-
-        // === YAZIK ===
-        private void Language_Click(object? sender, RoutedEventArgs e)
-        {
-            if (sender is MenuItem item && item.Tag is string lang)
+            if (sender is Control ctl && ctl.Tag is string action)
             {
-                ShowMessage($"Вы выбрали язык: {lang}");
+                switch (action)
+                {
+                    case "Open": ShowMessage("Открыть файл"); break;
+                    case "Save": ShowMessage("Сохранить файл"); break;
+                    case "Exit": this.Close(); break;
+                }
             }
         }
 
-        // === XABAR OYNASI ===
+       
+        private void EditAction(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Control ctl && ctl.Tag is string action)
+            {
+                switch (action)
+                {
+                    case "Copy": MainTextBox.Copy(); break;
+                    case "Cut": MainTextBox.Cut(); break;
+                    case "Paste": MainTextBox.Paste(); break;
+                    case "Clear": MainTextBox.Text = ""; break;
+                }
+            }
+        }
+
+        
+        private void ViewAction(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Control ctl && ctl.Tag is string action)
+            {
+                switch (action)
+                {
+                    case "Light":
+                        this.Background = Brushes.White;
+                        MainTextBox.Background = Brushes.White;
+                        MainTextBox.Foreground = Brushes.Black;
+                        break;
+                    case "Dark":
+                        this.Background = Brushes.Black;
+                        MainTextBox.Background = Brushes.Black;
+                        MainTextBox.Foreground = Brushes.White;
+                        break;
+                    case "Font":
+                        MainTextBox.FontSize = 16;
+                        break;
+                }
+            }
+        }
+
+        
+        private void HelpAction(object? sender, RoutedEventArgs e) => ShowMessage("Программа для демонстрации меню и инструментов");
+
+        
+        private void LanguageAction(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Control ctl && ctl.Tag is string lang)
+                ShowMessage("Вы выбрали язык: " + lang);
+        }
+
         private async void ShowMessage(string text)
         {
-            var dialog = new Window
+            var dlg = new Window
             {
-                Title = "Информация",
-                Width = 360,
-                Height = 180,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                CanResize = false,
-                Background = this.Background
+                Title = "Info",
+                Width = 300,
+                Height = 150,
+                Content = new TextBlock { Text = text, Margin = new Avalonia.Thickness(10) }
             };
-
-            var panel = new StackPanel { Margin = new Thickness(15), Spacing = 10 };
-            panel.Children.Add(new TextBlock
-            {
-                Text = text,
-                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
-                FontSize = 14
-            });
-
-            var okBtn = new Button
-            {
-                Content = "OK",
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-                MinWidth = 80
-            };
-            okBtn.Click += (_, __) => dialog.Close();
-
-            panel.Children.Add(okBtn);
-            dialog.Content = panel;
-
-            await dialog.ShowDialog(this);
+            await dlg.ShowDialog(this);
         }
     }
 }
