@@ -218,7 +218,7 @@
 
 <!-- Practic task 6 -->
 
-<Window xmlns="https://github.com/avaloniaui"
+<!-- <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="HelloAvalonia.MainWindow"
         Title="Avalonia Unified UI"
@@ -263,5 +263,94 @@
             <TextBox x:Name="MainTextBox" AcceptsReturn="True" FontSize="14"/>
         </ScrollViewer>
     </DockPanel>
-</Window>
+</Window> -->
 
+
+
+<!-- Practic task 9 -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Title="Calculator"
+        Width="360" Height="520"
+        Background="#1E1E1E">
+
+  <Grid RowDefinitions="120,Auto,*" Margin="15">
+
+    <!-- DISPLAY AREA -->
+    <Border Background="#00000000" Padding="10" CornerRadius="8" Grid.Row="0">
+      <TextBlock x:Name="Display"
+                 Text="0"
+                 FontSize="54"
+                 FontWeight="Bold"
+                 Foreground="White"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Bottom"
+                 TextAlignment="Right"/>
+    </Border>
+
+    <!-- BUTTON GRID -->
+    <UniformGrid Grid.Row="2" Rows="5" Columns="4" HorizontalAlignment="Center">
+
+      <!-- Row 1 -->
+      <Button Content="7" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="8" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="9" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="/" Classes="op" Click="OperatorButton_Click"/>
+
+      <!-- Row 2 -->
+      <Button Content="4" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="5" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="6" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="*" Classes="op" Click="OperatorButton_Click"/>
+
+      <!-- Row 3 -->
+      <Button Content="1" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="2" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="3" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="-" Classes="op" Click="OperatorButton_Click"/>
+
+      <!-- Row 4 -->
+      <Button Content="0" Classes="num" Click="NumberButton_Click"/>
+      <Button Content="%" Classes="op" Click="OperatorButton_Click"/>
+      <Button Content="C" Classes="clear" Click="ClearButton_Click"/>
+      <Button Content="+" Classes="op" Click="OperatorButton_Click"/>
+
+      <!-- Row 5 -->
+      <Button Content="=" Classes="equals" Click="EqualsButton_Click"/>
+
+    </UniformGrid>
+  </Grid>
+
+  <!-- Styles -->
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="FontSize" Value="24"/>
+      <Setter Property="CornerRadius" Value="16"/>
+      <Setter Property="Margin" Value="6"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="Height" Value="60"/>
+      <Setter Property="Width" Value="60"/>
+    </Style>
+
+    <Style Selector="Button.num">
+      <Setter Property="Background" Value="#444"/>
+    </Style>
+
+    <Style Selector="Button.op">
+      <Setter Property="Background" Value="#FF9500"/>
+    </Style>
+
+    <Style Selector="Button.clear">
+      <Setter Property="Background" Value="#C0392B"/>
+    </Style>
+
+    <Style Selector="Button.equals">
+      <Setter Property="Background" Value="#28A745"/>
+      <Setter Property="Width" Value="270"/>
+      <Setter Property="FontSize" Value="32"/>
+    </Style>
+
+  </Window.Styles>
+</Window>

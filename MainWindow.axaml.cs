@@ -376,114 +376,206 @@
 
 
 // Practic task 6
+// using Avalonia.Controls;
+// using Avalonia.Interactivity;
+// using Avalonia.Media;
+// using System;
+
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//             InitializeContextMenu();
+//         }
+
+//         private void InitializeContextMenu()
+//         {
+//             var ctx = new ContextMenu();
+
+//             var copyItem = new MenuItem { Header = "Копировать", Tag="Copy" };
+//             copyItem.Click += EditAction;
+
+//             var pasteItem = new MenuItem { Header = "Вставить", Tag="Paste" };
+//             pasteItem.Click += EditAction;
+
+//             var clearItem = new MenuItem { Header = "Очистить", Tag="Clear" };
+//             clearItem.Click += EditAction;
+
+//             ctx.Items.Add(copyItem);
+//             ctx.Items.Add(pasteItem);
+//             ctx.Items.Add(clearItem);
+
+//             MainTextBox.ContextMenu = ctx;
+//         }
+
+        
+//         private void FileAction(object? sender, RoutedEventArgs e)
+//         {
+//             if (sender is Control ctl && ctl.Tag is string action)
+//             {
+//                 switch (action)
+//                 {
+//                     case "Open": ShowMessage("Открыть файл"); break;
+//                     case "Save": ShowMessage("Сохранить файл"); break;
+//                     case "Exit": this.Close(); break;
+//                 }
+//             }
+//         }
+
+       
+//         private void EditAction(object? sender, RoutedEventArgs e)
+//         {
+//             if (sender is Control ctl && ctl.Tag is string action)
+//             {
+//                 switch (action)
+//                 {
+//                     case "Copy": MainTextBox.Copy(); break;
+//                     case "Cut": MainTextBox.Cut(); break;
+//                     case "Paste": MainTextBox.Paste(); break;
+//                     case "Clear": MainTextBox.Text = ""; break;
+//                 }
+//             }
+//         }
+
+        
+//         private void ViewAction(object? sender, RoutedEventArgs e)
+//         {
+//             if (sender is Control ctl && ctl.Tag is string action)
+//             {
+//                 switch (action)
+//                 {
+//                     case "Light":
+//                         this.Background = Brushes.White;
+//                         MainTextBox.Background = Brushes.White;
+//                         MainTextBox.Foreground = Brushes.Black;
+//                         break;
+//                     case "Dark":
+//                         this.Background = Brushes.Black;
+//                         MainTextBox.Background = Brushes.Black;
+//                         MainTextBox.Foreground = Brushes.White;
+//                         break;
+//                     case "Font":
+//                         MainTextBox.FontSize = 16;
+//                         break;
+//                 }
+//             }
+//         }
+
+        
+//         private void HelpAction(object? sender, RoutedEventArgs e) => ShowMessage("Программа для демонстрации меню и инструментов");
+
+        
+//         private void LanguageAction(object? sender, RoutedEventArgs e)
+//         {
+//             if (sender is Control ctl && ctl.Tag is string lang)
+//                 ShowMessage("Вы выбрали язык: " + lang);
+//         }
+
+//         private async void ShowMessage(string text)
+//         {
+//             var dlg = new Window
+//             {
+//                 Title = "Info",
+//                 Width = 300,
+//                 Height = 150,
+//                 Content = new TextBlock { Text = text, Margin = new Avalonia.Thickness(10) }
+//             };
+//             await dlg.ShowDialog(this);
+//         }
+//     }
+// }
+
+
+
+// Practic task 9
+
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using System;
 
 namespace HelloAvalonia
 {
     public partial class MainWindow : Window
     {
+        private double _storedValue = 0;
+        private string? _currentOperator = "";
+        private bool _isNewEntry = true;
+
         public MainWindow()
         {
             InitializeComponent();
-            InitializeContextMenu();
         }
 
-        private void InitializeContextMenu()
+        private void NumberButton_Click(object? sender, RoutedEventArgs e)
         {
-            var ctx = new ContextMenu();
-
-            var copyItem = new MenuItem { Header = "Копировать", Tag="Copy" };
-            copyItem.Click += EditAction;
-
-            var pasteItem = new MenuItem { Header = "Вставить", Tag="Paste" };
-            pasteItem.Click += EditAction;
-
-            var clearItem = new MenuItem { Header = "Очистить", Tag="Clear" };
-            clearItem.Click += EditAction;
-
-            ctx.Items.Add(copyItem);
-            ctx.Items.Add(pasteItem);
-            ctx.Items.Add(clearItem);
-
-            MainTextBox.ContextMenu = ctx;
-        }
-
-        
-        private void FileAction(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Control ctl && ctl.Tag is string action)
+            if (sender is Button btn)
             {
-                switch (action)
-                {
-                    case "Open": ShowMessage("Открыть файл"); break;
-                    case "Save": ShowMessage("Сохранить файл"); break;
-                    case "Exit": this.Close(); break;
-                }
+                var digit = btn.Content?.ToString() ?? "0";
+
+                if (_isNewEntry || Display.Text == "0")
+                    Display.Text = digit;
+                else
+                    Display.Text += digit;
+
+                _isNewEntry = false;
             }
         }
 
-       
-        private void EditAction(object? sender, RoutedEventArgs e)
+        private void OperatorButton_Click(object? sender, RoutedEventArgs e)
         {
-            if (sender is Control ctl && ctl.Tag is string action)
+            if (sender is not Button btn) return;
+
+            if (double.TryParse(Display.Text, out var value))
             {
-                switch (action)
+                if (!_isNewEntry && !string.IsNullOrEmpty(_currentOperator))
                 {
-                    case "Copy": MainTextBox.Copy(); break;
-                    case "Cut": MainTextBox.Cut(); break;
-                    case "Paste": MainTextBox.Paste(); break;
-                    case "Clear": MainTextBox.Text = ""; break;
+                    _storedValue = Calculate(_storedValue, value, _currentOperator!);
+                    Display.Text = _storedValue.ToString();
+                }
+                else
+                {
+                    _storedValue = value;
                 }
             }
+
+            _currentOperator = btn.Content?.ToString();
+            _isNewEntry = true;
         }
 
-        
-        private void ViewAction(object? sender, RoutedEventArgs e)
+        private void EqualsButton_Click(object? sender, RoutedEventArgs e)
         {
-            if (sender is Control ctl && ctl.Tag is string action)
+            if (string.IsNullOrEmpty(_currentOperator)) return;
+            if (!double.TryParse(Display.Text, out var value)) return;
+
+            _storedValue = Calculate(_storedValue, value, _currentOperator!);
+            Display.Text = _storedValue.ToString();
+
+            _currentOperator = "";
+            _isNewEntry = true;
+        }
+
+        private void ClearButton_Click(object? sender, RoutedEventArgs e)
+        {
+            _storedValue = 0;
+            _currentOperator = "";
+            Display.Text = "0";
+            _isNewEntry = true;
+        }
+
+        private double Calculate(double left, double right, string op)
+        {
+            return op switch
             {
-                switch (action)
-                {
-                    case "Light":
-                        this.Background = Brushes.White;
-                        MainTextBox.Background = Brushes.White;
-                        MainTextBox.Foreground = Brushes.Black;
-                        break;
-                    case "Dark":
-                        this.Background = Brushes.Black;
-                        MainTextBox.Background = Brushes.Black;
-                        MainTextBox.Foreground = Brushes.White;
-                        break;
-                    case "Font":
-                        MainTextBox.FontSize = 16;
-                        break;
-                }
-            }
-        }
-
-        
-        private void HelpAction(object? sender, RoutedEventArgs e) => ShowMessage("Программа для демонстрации меню и инструментов");
-
-        
-        private void LanguageAction(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Control ctl && ctl.Tag is string lang)
-                ShowMessage("Вы выбрали язык: " + lang);
-        }
-
-        private async void ShowMessage(string text)
-        {
-            var dlg = new Window
-            {
-                Title = "Info",
-                Width = 300,
-                Height = 150,
-                Content = new TextBlock { Text = text, Margin = new Avalonia.Thickness(10) }
+                "+" => left + right,
+                "-" => left - right,
+                "*" => left * right,
+                "/" => right == 0 ? 0 : left / right,
+                "%" => right == 0 ? 0 : left % right,
+                _ => right
             };
-            await dlg.ShowDialog(this);
         }
     }
 }
