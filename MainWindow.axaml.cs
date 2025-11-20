@@ -492,90 +492,156 @@
 
 // Practic task 9
 
+// using Avalonia.Controls;
+// using Avalonia.Interactivity;
+// using System;
+
+// namespace HelloAvalonia
+// {
+//     public partial class MainWindow : Window
+//     {
+//         private double _storedValue = 0;
+//         private string? _currentOperator = "";
+//         private bool _isNewEntry = true;
+
+//         public MainWindow()
+//         {
+//             InitializeComponent();
+//         }
+
+//         private void NumberButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             if (sender is Button btn)
+//             {
+//                 var digit = btn.Content?.ToString() ?? "0";
+
+//                 if (_isNewEntry || Display.Text == "0")
+//                     Display.Text = digit;
+//                 else
+//                     Display.Text += digit;
+
+//                 _isNewEntry = false;
+//             }
+//         }
+
+//         private void DecimalButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             if (_isNewEntry)
+//             {
+//                 Display.Text = "0.";
+//                 _isNewEntry = false;
+//                 return;
+//             }
+
+//             if (!Display.Text.Contains("."))
+//                 Display.Text += ".";
+//         }
+
+//         private void OperatorButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             if (sender is not Button btn) return;
+
+//             if (double.TryParse(Display.Text, out var value))
+//             {
+//                 if (!_isNewEntry && !string.IsNullOrEmpty(_currentOperator))
+//                 {
+//                     try
+//                     {
+//                         _storedValue = Calculate(_storedValue, value, _currentOperator!);
+//                         Display.Text = _storedValue.ToString();
+//                     }
+//                     catch (DivideByZeroException)
+//                     {
+//                         Display.Text = "Error";
+//                     }
+//                 }
+//                 else
+//                 {
+//                     _storedValue = value;
+//                 }
+//             }
+
+//             _currentOperator = btn.Content?.ToString();
+//             _isNewEntry = true;
+//         }
+
+//         private void EqualsButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             if (string.IsNullOrEmpty(_currentOperator)) return;
+//             if (!double.TryParse(Display.Text, out var value)) return;
+
+//             try
+//             {
+//                 _storedValue = Calculate(_storedValue, value, _currentOperator!);
+//                 Display.Text = _storedValue.ToString();
+//             }
+//             catch (DivideByZeroException)
+//             {
+//                 Display.Text = "Error";
+//             }
+
+//             _currentOperator = "";
+//             _isNewEntry = true;
+//         }
+
+//         private void ClearButton_Click(object? sender, RoutedEventArgs e)
+//         {
+//             _storedValue = 0;
+//             _currentOperator = "";
+//             Display.Text = "0";
+//             _isNewEntry = true;
+//         }
+
+//         private double Calculate(double left, double right, string op)
+//         {
+//             return op switch
+//             {
+//                 "+" => left + right,
+//                 "-" => left - right,
+//                 "*" => left * right,
+//                 "/" => right == 0
+//                         ? throw new DivideByZeroException()
+//                         : left / right,
+//                 "%" => right == 0
+//                         ? throw new DivideByZeroException()
+//                         : left % right,
+//                 _ => right
+//             };
+//         }
+//     }
+// }
+
+
+
+
+// Practic task 
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using System;
+using Avalonia.Layout;
 
-namespace HelloAvalonia
+namespace HelloAvalonia;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        private double _storedValue = 0;
-        private string? _currentOperator = "";
-        private bool _isNewEntry = true;
+        InitializeComponent();
+    }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+    private void GotoSettings_Click(object? sender, RoutedEventArgs e)
+    {
+        MainTabs.SelectedIndex = 1;
+    }
 
-        private void NumberButton_Click(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn)
-            {
-                var digit = btn.Content?.ToString() ?? "0";
+    private void EnableBox_Changed(object? sender, RoutedEventArgs e)
+    {
+        SettingsText.IsEnabled = EnableBox.IsChecked ?? false;
+    }
 
-                if (_isNewEntry || Display.Text == "0")
-                    Display.Text = digit;
-                else
-                    Display.Text += digit;
-
-                _isNewEntry = false;
-            }
-        }
-
-        private void OperatorButton_Click(object? sender, RoutedEventArgs e)
-        {
-            if (sender is not Button btn) return;
-
-            if (double.TryParse(Display.Text, out var value))
-            {
-                if (!_isNewEntry && !string.IsNullOrEmpty(_currentOperator))
-                {
-                    _storedValue = Calculate(_storedValue, value, _currentOperator!);
-                    Display.Text = _storedValue.ToString();
-                }
-                else
-                {
-                    _storedValue = value;
-                }
-            }
-
-            _currentOperator = btn.Content?.ToString();
-            _isNewEntry = true;
-        }
-
-        private void EqualsButton_Click(object? sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(_currentOperator)) return;
-            if (!double.TryParse(Display.Text, out var value)) return;
-
-            _storedValue = Calculate(_storedValue, value, _currentOperator!);
-            Display.Text = _storedValue.ToString();
-
-            _currentOperator = "";
-            _isNewEntry = true;
-        }
-
-        private void ClearButton_Click(object? sender, RoutedEventArgs e)
-        {
-            _storedValue = 0;
-            _currentOperator = "";
-            Display.Text = "0";
-            _isNewEntry = true;
-        }
-
-        private double Calculate(double left, double right, string op)
-        {
-            return op switch
-            {
-                "+" => left + right,
-                "-" => left - right,
-                "*" => left * right,
-                "/" => right == 0 ? 0 : left / right,
-                "%" => right == 0 ? 0 : left % right,
-                _ => right
-            };
-        }
+    private void ToggleLabel_Click(object? sender, RoutedEventArgs e)
+    {
+        PanelLabel.IsVisible = !PanelLabel.IsVisible;
     }
 }
+
+

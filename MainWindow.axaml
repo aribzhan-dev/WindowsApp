@@ -268,16 +268,15 @@
 
 
 <!-- Practic task 9 -->
-<Window xmlns="https://github.com/avaloniaui"
+<!-- <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="HelloAvalonia.MainWindow"
         Title="Calculator"
         Width="360" Height="520"
         Background="#1E1E1E">
 
-  <Grid RowDefinitions="120,Auto,*" Margin="15">
+  <Grid RowDefinitions="Auto,*" Margin="15">
 
-    <!-- DISPLAY AREA -->
     <Border Background="#00000000" Padding="10" CornerRadius="8" Grid.Row="0">
       <TextBlock x:Name="Display"
                  Text="0"
@@ -289,49 +288,52 @@
                  TextAlignment="Right"/>
     </Border>
 
-    <!-- BUTTON GRID -->
-    <UniformGrid Grid.Row="2" Rows="5" Columns="4" HorizontalAlignment="Center">
+    
+    <Border Grid.Row="1" VerticalAlignment="Bottom" Padding="0">
+      <UniformGrid Rows="5" Columns="4" Margin="0,10,0,0">
 
-      <!-- Row 1 -->
-      <Button Content="7" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="8" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="9" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="/" Classes="op" Click="OperatorButton_Click"/>
+        
+        <Button Content="7" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="8" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="9" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="/" Classes="op" Click="OperatorButton_Click"/>
 
-      <!-- Row 2 -->
-      <Button Content="4" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="5" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="6" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="*" Classes="op" Click="OperatorButton_Click"/>
+        
+        <Button Content="4" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="5" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="6" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="*" Classes="op" Click="OperatorButton_Click"/>
 
-      <!-- Row 3 -->
-      <Button Content="1" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="2" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="3" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="-" Classes="op" Click="OperatorButton_Click"/>
+        
+        <Button Content="1" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="2" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="3" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="-" Classes="op" Click="OperatorButton_Click"/>
 
-      <!-- Row 4 -->
-      <Button Content="0" Classes="num" Click="NumberButton_Click"/>
-      <Button Content="%" Classes="op" Click="OperatorButton_Click"/>
-      <Button Content="C" Classes="clear" Click="ClearButton_Click"/>
-      <Button Content="+" Classes="op" Click="OperatorButton_Click"/>
+        
+        <Button Content="0" Classes="num" Click="NumberButton_Click"/>
+        <Button Content="%" Classes="op" Click="OperatorButton_Click"/>
+        <Button Content="." Classes="num" Click="DecimalButton_Click"/>
+        <Button Content="C" Classes="clear" Click="ClearButton_Click"/>
 
-      <!-- Row 5 -->
-      <Button Content="=" Classes="equals" Click="EqualsButton_Click"/>
+        
+        <Button Content="+" Classes="op" Click="OperatorButton_Click"/>
+        <Button Content="=" Classes="equals" Click="EqualsButton_Click" Grid.ColumnSpan="3"/>
 
-    </UniformGrid>
+      </UniformGrid>
+    </Border>
+
   </Grid>
 
-  <!-- Styles -->
+ 
   <Window.Styles>
     <Style Selector="Button">
-      <Setter Property="FontSize" Value="24"/>
-      <Setter Property="CornerRadius" Value="16"/>
+      <Setter Property="FontSize" Value="26"/>
+      <Setter Property="CornerRadius" Value="30"/>
       <Setter Property="Margin" Value="6"/>
       <Setter Property="Foreground" Value="White"/>
       <Setter Property="FontWeight" Value="Bold"/>
-      <Setter Property="Height" Value="60"/>
-      <Setter Property="Width" Value="60"/>
+      <Setter Property="Height" Value="65"/>
     </Style>
 
     <Style Selector="Button.num">
@@ -348,9 +350,62 @@
 
     <Style Selector="Button.equals">
       <Setter Property="Background" Value="#28A745"/>
-      <Setter Property="Width" Value="270"/>
-      <Setter Property="FontSize" Value="32"/>
+      <Setter Property="FontSize" Value="30"/>
     </Style>
-
   </Window.Styles>
+</Window> -->
+
+
+
+
+
+<!-- Practic task  -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Width="500" Height="400"
+        Title="Tasks App">
+
+    <TabControl x:Name="MainTabs">
+        <TabItem Header="Главная">
+            <StackPanel Margin="10">
+                <Label Content="Это главная вкладка"/>
+                <Button Content="Перейти в Настройки"
+                        Click="GotoSettings_Click"
+                        Width="200"/>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem Header="Настройки">
+            <StackPanel Margin="10" Spacing="10">
+                <CheckBox x:Name="EnableBox"
+                          Content="Разрешить ввод"
+                          IsChecked="True"
+                          Checked="EnableBox_Changed"
+                          Unchecked="EnableBox_Changed"/>
+                <TextBox x:Name="SettingsText"
+                         Watermark="Введите текст..."/>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem Header="Справка">
+            <Grid>
+                <Border Background="#E0E0E0"
+                        Height="60"
+                        VerticalAlignment="Top"
+                        Padding="10">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Label x:Name="PanelLabel"
+                               Content="Текст внутри панели"/>
+                        <Button Content="Показать/Скрыть"
+                                Click="ToggleLabel_Click"
+                                HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
+
+
+
