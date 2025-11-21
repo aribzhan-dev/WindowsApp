@@ -412,103 +412,125 @@
 
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:HelloAvalonia"
         x:Class="HelloAvalonia.MainWindow"
-        Width="520" Height="560"
-        Background="White"
-        Title="Minimal Todo List">
+        Width="520" Height="680"
+        MinWidth="400" MinHeight="500"
+        Background="#FAFAFA"
+        Title="My Tasks"
+        FontFamily="Segoe UI, system-ui, -apple-system, sans-serif">
 
+    <!-- Converter resource -->
     <Window.Resources>
-
-        <!-- Item Template -->
-        <DataTemplate x:Key="TodoItemTemplate">
-            <StackPanel Orientation="Horizontal"
-                        Spacing="12"
-                        Margin="6">
-
-                <!-- Checkbox -->
-                <CheckBox IsChecked="{Binding IsChecked}"/>
-
-                <!-- ID -->
-                <TextBlock Text="{Binding Id}"
-                           Width="30"
-                           VerticalAlignment="Center"/>
-
-                <!-- Task Text -->
-                <TextBlock Text="{Binding Text}"
-                           Width="220"
-                           VerticalAlignment="Center"/>
-
-                <!-- STATUS -->
-                <ComboBox Width="140"
-                          SelectedItem="{Binding Status}">
-                    <ComboBoxItem Content="Not Started"/>
-                    <ComboBoxItem Content="In Progress"/>
-                    <ComboBoxItem Content="Completed"/>
-                </ComboBox>
-
-            </StackPanel>
-        </DataTemplate>
-
-        <!-- Button Hover Style -->
-        <Style Selector="Button:pointerover">
-            <Setter Property="Background" Value="#DDDDDD"/>
-        </Style>
-
+        <local:StatusToColorConverter x:Key="StatusToColorConverter"/>
     </Window.Resources>
 
-    <DockPanel>
+    <!-- Styles -->
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#E3F2FD"/>
+            <Setter Property="BorderBrush" Value="#BBDEFB"/>
+            <Setter Property="Foreground" Value="#1976D2"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#BBDEFB"/>
+            <Setter Property="Foreground" Value="#0D47A1"/>
+        </Style>
+        <Style Selector="Button.add">
+            <Setter Property="Background" Value="#1976D2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="48"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="CornerRadius" Value="24"/>
+        </Style>
+        <Style Selector="Button.delete">
+            <Setter Property="Background" Value="#FFEBEE"/>
+            <Setter Property="BorderBrush" Value="#FFCDD2"/>
+            <Setter Property="Foreground" Value="#C62828"/>
+        </Style>
+        <Style Selector="Button.delete:pointerover">
+            <Setter Property="Background" Value="#FFCDD2"/>
+        </Style>
+        <Style Selector="TextBlock.completed">
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="TextDecorations" Value="Strikethrough"/>
+        </Style>
+    </Window.Styles>
 
-        <!-- MENU -->
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="Save Tasks" Click="MenuSave_Click"/>
-                <MenuItem Header="Clear All" Click="MenuClearAll_Click"/>
-                <MenuItem Header="Exit" Click="MenuExit_Click"/>
-            </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="About" Click="MenuAbout_Click"/>
-            </MenuItem>
-        </Menu>
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="24" VerticalAlignment="Top">
 
-        <!-- INPUT FIELD -->
-        <StackPanel DockPanel.Dock="Top"
-                    Orientation="Horizontal"
-                    Margin="10" Spacing="6">
-
-            <TextBox x:Name="txtTaskInput"
-                     Width="330"
-                     Height="32"
-                     Background="#F0F0F0"
-                     BorderBrush="#CCCCCC"
-                     Foreground="Black"
-                     Watermark="Enter a task..." />
-
-            <Button Content="Add"
-                    Width="100"
-                    Height="32"
-                    Background="#E0E0E0"
-                    BorderBrush="#B0B0B0"
-                    Foreground="Black"
-                    Click="btnAdd_Click"/>
+        <!-- Title -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,32">
+            <TextBlock Text="My Tasks" FontSize="36" FontWeight="Bold" Foreground="#1976D2" HorizontalAlignment="Center"/>
+            <TextBlock Text="Stay organized and productive" FontSize="15" Foreground="#666666" HorizontalAlignment="Center" Margin="0,8,0,0"/>
         </StackPanel>
 
-        <!-- TASK LIST -->
-        <ListBox x:Name="lstTasks"
-                 Margin="10"
-                 Background="White"
-                 BorderBrush="#DDDDDD"
-                 BorderThickness="1"
-                 ItemTemplate="{StaticResource TodoItemTemplate}"/>
+        <!-- Add Task Bar -->
+        <Border Grid.Row="1" Background="White" CornerRadius="16" Padding="8" Margin="0,0,0,24"
+                BoxShadow="0 8 32 0 #1A000000">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox x:Name="txtTaskInput"
+                         Watermark="Add new task..."
+                         FontSize="16"
+                         Padding="16,14"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         CornerRadius="12"/>
+                <Button Grid.Column="1" Content="+" FontSize="28" Classes="add" Click="btnAdd_Click"/>
+            </Grid>
+        </Border>
 
-        <!-- REMOVE BUTTON -->
-        <Button Content="Remove Selected"
-                Margin="10"
-                Height="36"
-                Background="#E0E0E0"
-                BorderBrush="#B0B0B0"
-                Foreground="Black"
+        <!-- Delete Completed Button -->
+        <Button Grid.Row="2" Content="Delete Completed Tasks" Classes="delete"
+                HorizontalAlignment="Center" Margin="0,0,0,16" Padding="20,10"
                 Click="btnRemove_Click"/>
 
-    </DockPanel>
+        <!-- Tasks List -->
+        <Border Grid.Row="3" Background="White" CornerRadius="16" BoxShadow="0 8 32 0 #1A000000" Margin="0,0,0,16">
+            <ScrollViewer Padding="8">
+                <ItemsControl x:Name="lstTasks" Margin="8">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#FAFAFA" CornerRadius="12" Margin="0,6" Padding="16"
+                                    BoxShadow="0 2 10 0 #11000000">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <!-- Checkbox -->
+                                    <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center"/>
 
+                                    <!-- Task Text + ID -->
+                                    <StackPanel Grid.Column="1" Margin="16,0">
+                                        <TextBlock Text="{Binding Text}"
+                                                   FontSize="16"
+                                                   Classes.completed="{Binding IsChecked}"/>
+                                        <TextBlock Text="{Binding Id, StringFormat='#{0}'}"
+                                                   Foreground="#999999" FontSize="12" Margin="0,4,0,0"/>
+                                    </StackPanel>
+
+                                    <!-- Status Badge -->
+                                    <Border Grid.Column="2"
+                                            Background="{Binding Status, Converter={StaticResource StatusToColorConverter}}"
+                                            CornerRadius="20" Padding="12,6" MinWidth="90">
+                                        <TextBlock Text="{Binding Status}"
+                                                   Foreground="White"
+                                                   FontSize="12"
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Stats -->
+        <TextBlock Grid.Row="4"
+                   Text="{Binding ElementName=lstTasks, Path=Items.Count, StringFormat='{}Completed: {0} of {1} tasks'}"
+                   Foreground="#666666" FontSize="15" HorizontalAlignment="Center" Margin="0,10"/>
+    </Grid>
 </Window>

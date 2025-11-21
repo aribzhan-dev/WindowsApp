@@ -654,15 +654,13 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace HelloAvalonia;
 
 public partial class MainWindow : Window
 {
-    private ObservableCollection<TodoItem> Tasks = new();
+    private readonly ObservableCollection<TodoItem> Tasks = new();
     private int nextId = 1;
 
     public MainWindow()
@@ -671,80 +669,28 @@ public partial class MainWindow : Window
         lstTasks.ItemsSource = Tasks;
     }
 
-    private async Task ShowMessage(string msg)
-    {
-        var dialog = new Window
-        {
-            Width = 260,
-            Height = 130,
-            Title = "Info",
-            Content = new TextBlock
-            {
-                Text = msg,
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
-            }
-        };
-
-        await dialog.ShowDialog(this);
-    }
-
-    private async void btnAdd_Click(object? sender, RoutedEventArgs e)
+    private void btnAdd_Click(object? sender, RoutedEventArgs e)
     {
         var text = txtTaskInput.Text?.Trim();
-
-        if (string.IsNullOrWhiteSpace(text))
-        {
-            await ShowMessage("Please enter a task.");
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(text)) return;
 
         Tasks.Add(new TodoItem
         {
             Id = nextId++,
             Text = text,
-            Status = "Not Started",
+            Status = "Active",
             IsChecked = false
         });
 
-        txtTaskInput.Text = "";
+        txtTaskInput.Text = string.Empty;
     }
 
-    private async void btnRemove_Click(object? sender, RoutedEventArgs e)
+    private void btnRemove_Click(object? sender, RoutedEventArgs e)
     {
-        var toRemove = Tasks.Where(t => t.IsChecked).ToList();
-
-        if (toRemove.Count == 0)
+        for (int i = Tasks.Count - 1; i >= 0; i--)
         {
-            await ShowMessage("No selected (checked) tasks.");
-            return;
+            if (Tasks[i].IsChecked)
+                Tasks.RemoveAt(i);
         }
-
-        foreach (var item in toRemove)
-            Tasks.Remove(item);
-    }
-
-    private void MenuExit_Click(object? sender, RoutedEventArgs e) => Close();
-
-    private async void MenuAbout_Click(object? sender, RoutedEventArgs e)
-    {
-        await ShowMessage("Minimalistic Todo App\nMade with Avalonia.");
-    }
-
-    private void MenuClearAll_Click(object? sender, RoutedEventArgs e)
-    {
-        Tasks.Clear();
-        nextId = 1;
-    }
-
-    private async void MenuSave_Click(object? sender, RoutedEventArgs e)
-    {
-        var path = "tasks.txt";
-
-        var lines = Tasks.Select(t => $"{t.Id} - {t.Text} - {t.Status}");
-
-        File.WriteAllLines(path, lines);
-
-        await ShowMessage("Saved to tasks.txt");
     }
 }
