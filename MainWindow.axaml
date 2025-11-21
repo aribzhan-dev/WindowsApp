@@ -360,7 +360,7 @@
 
 
 <!-- Practic task  -->
-<Window xmlns="https://github.com/avaloniaui"
+<!-- <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="HelloAvalonia.MainWindow"
         Width="500" Height="400"
@@ -405,7 +405,110 @@
             </Grid>
         </TabItem>
     </TabControl>
+</Window> -->
+
+
+
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HelloAvalonia.MainWindow"
+        Width="520" Height="560"
+        Background="White"
+        Title="Minimal Todo List">
+
+    <Window.Resources>
+
+        <!-- Item Template -->
+        <DataTemplate x:Key="TodoItemTemplate">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="12"
+                        Margin="6">
+
+                <!-- Checkbox -->
+                <CheckBox IsChecked="{Binding IsChecked}"/>
+
+                <!-- ID -->
+                <TextBlock Text="{Binding Id}"
+                           Width="30"
+                           VerticalAlignment="Center"/>
+
+                <!-- Task Text -->
+                <TextBlock Text="{Binding Text}"
+                           Width="220"
+                           VerticalAlignment="Center"/>
+
+                <!-- STATUS -->
+                <ComboBox Width="140"
+                          SelectedItem="{Binding Status}">
+                    <ComboBoxItem Content="Not Started"/>
+                    <ComboBoxItem Content="In Progress"/>
+                    <ComboBoxItem Content="Completed"/>
+                </ComboBox>
+
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Button Hover Style -->
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#DDDDDD"/>
+        </Style>
+
+    </Window.Resources>
+
+    <DockPanel>
+
+        <!-- MENU -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Save Tasks" Click="MenuSave_Click"/>
+                <MenuItem Header="Clear All" Click="MenuClearAll_Click"/>
+                <MenuItem Header="Exit" Click="MenuExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Click="MenuAbout_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- INPUT FIELD -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Margin="10" Spacing="6">
+
+            <TextBox x:Name="txtTaskInput"
+                     Width="330"
+                     Height="32"
+                     Background="#F0F0F0"
+                     BorderBrush="#CCCCCC"
+                     Foreground="Black"
+                     Watermark="Enter a task..." />
+
+            <Button Content="Add"
+                    Width="100"
+                    Height="32"
+                    Background="#E0E0E0"
+                    BorderBrush="#B0B0B0"
+                    Foreground="Black"
+                    Click="btnAdd_Click"/>
+        </StackPanel>
+
+        <!-- TASK LIST -->
+        <ListBox x:Name="lstTasks"
+                 Margin="10"
+                 Background="White"
+                 BorderBrush="#DDDDDD"
+                 BorderThickness="1"
+                 ItemTemplate="{StaticResource TodoItemTemplate}"/>
+
+        <!-- REMOVE BUTTON -->
+        <Button Content="Remove Selected"
+                Margin="10"
+                Height="36"
+                Background="#E0E0E0"
+                BorderBrush="#B0B0B0"
+                Foreground="Black"
+                Click="btnRemove_Click"/>
+
+    </DockPanel>
+
 </Window>
-
-
-

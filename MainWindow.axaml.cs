@@ -615,33 +615,136 @@
 
 
 // Practic task 
+// using Avalonia.Controls;
+// using Avalonia.Interactivity;
+// using Avalonia.Layout;
+
+// namespace HelloAvalonia;
+
+// public partial class MainWindow : Window
+// {
+//     public MainWindow()
+//     {
+//         InitializeComponent();
+//     }
+
+//     private void GotoSettings_Click(object? sender, RoutedEventArgs e)
+//     {
+//         MainTabs.SelectedIndex = 1;
+//     }
+
+//     private void EnableBox_Changed(object? sender, RoutedEventArgs e)
+//     {
+//         SettingsText.IsEnabled = EnableBox.IsChecked ?? false;
+//     }
+
+//     private void ToggleLabel_Click(object? sender, RoutedEventArgs e)
+//     {
+//         PanelLabel.IsVisible = !PanelLabel.IsVisible;
+//     }
+// }
+
+
+
+
+
+
+
+
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Layout;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HelloAvalonia;
 
 public partial class MainWindow : Window
 {
+    private ObservableCollection<TodoItem> Tasks = new();
+    private int nextId = 1;
+
     public MainWindow()
     {
         InitializeComponent();
+        lstTasks.ItemsSource = Tasks;
     }
 
-    private void GotoSettings_Click(object? sender, RoutedEventArgs e)
+    private async Task ShowMessage(string msg)
     {
-        MainTabs.SelectedIndex = 1;
+        var dialog = new Window
+        {
+            Width = 260,
+            Height = 130,
+            Title = "Info",
+            Content = new TextBlock
+            {
+                Text = msg,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
+            }
+        };
+
+        await dialog.ShowDialog(this);
     }
 
-    private void EnableBox_Changed(object? sender, RoutedEventArgs e)
+    private async void btnAdd_Click(object? sender, RoutedEventArgs e)
     {
-        SettingsText.IsEnabled = EnableBox.IsChecked ?? false;
+        var text = txtTaskInput.Text?.Trim();
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            await ShowMessage("Please enter a task.");
+            return;
+        }
+
+        Tasks.Add(new TodoItem
+        {
+            Id = nextId++,
+            Text = text,
+            Status = "Not Started",
+            IsChecked = false
+        });
+
+        txtTaskInput.Text = "";
     }
 
-    private void ToggleLabel_Click(object? sender, RoutedEventArgs e)
+    private async void btnRemove_Click(object? sender, RoutedEventArgs e)
     {
-        PanelLabel.IsVisible = !PanelLabel.IsVisible;
+        var toRemove = Tasks.Where(t => t.IsChecked).ToList();
+
+        if (toRemove.Count == 0)
+        {
+            await ShowMessage("No selected (checked) tasks.");
+            return;
+        }
+
+        foreach (var item in toRemove)
+            Tasks.Remove(item);
+    }
+
+    private void MenuExit_Click(object? sender, RoutedEventArgs e) => Close();
+
+    private async void MenuAbout_Click(object? sender, RoutedEventArgs e)
+    {
+        await ShowMessage("Minimalistic Todo App\nMade with Avalonia.");
+    }
+
+    private void MenuClearAll_Click(object? sender, RoutedEventArgs e)
+    {
+        Tasks.Clear();
+        nextId = 1;
+    }
+
+    private async void MenuSave_Click(object? sender, RoutedEventArgs e)
+    {
+        var path = "tasks.txt";
+
+        var lines = Tasks.Select(t => $"{t.Id} - {t.Text} - {t.Status}");
+
+        File.WriteAllLines(path, lines);
+
+        await ShowMessage("Saved to tasks.txt");
     }
 }
-
-
