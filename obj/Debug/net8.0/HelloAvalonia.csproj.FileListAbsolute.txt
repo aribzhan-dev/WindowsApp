@@ -62,6 +62,3 @@
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/Avalonia/HelloAvalonia.dll
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/Avalonia/HelloAvalonia.pdb
 /Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/refint/Avalonia/HelloAvalonia.dll
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.dll
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/refint/HelloAvalonia.dll
-/Users/admin/Desktop/HelloAvalonia/obj/Debug/net8.0/HelloAvalonia.pdb

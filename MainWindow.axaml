@@ -409,128 +409,103 @@
 
 
 
-
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="using:HelloAvalonia"
         x:Class="HelloAvalonia.MainWindow"
         Width="520" Height="680"
-        MinWidth="400" MinHeight="500"
         Background="#FAFAFA"
-        Title="My Tasks"
-        FontFamily="Segoe UI, system-ui, -apple-system, sans-serif">
+        Title="My Tasks">
 
-    <!-- Converter resource -->
     <Window.Resources>
         <local:StatusToColorConverter x:Key="StatusToColorConverter"/>
     </Window.Resources>
 
-    <!-- Styles -->
-    <Window.Styles>
-        <Style Selector="Button">
-            <Setter Property="Background" Value="#E3F2FD"/>
-            <Setter Property="BorderBrush" Value="#BBDEFB"/>
-            <Setter Property="Foreground" Value="#1976D2"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="16,10"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-        <Style Selector="Button:pointerover">
-            <Setter Property="Background" Value="#BBDEFB"/>
-            <Setter Property="Foreground" Value="#0D47A1"/>
-        </Style>
-        <Style Selector="Button.add">
-            <Setter Property="Background" Value="#1976D2"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="48"/>
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="CornerRadius" Value="24"/>
-        </Style>
-        <Style Selector="Button.delete">
-            <Setter Property="Background" Value="#FFEBEE"/>
-            <Setter Property="BorderBrush" Value="#FFCDD2"/>
-            <Setter Property="Foreground" Value="#C62828"/>
-        </Style>
-        <Style Selector="Button.delete:pointerover">
-            <Setter Property="Background" Value="#FFCDD2"/>
-        </Style>
-        <Style Selector="TextBlock.completed">
-            <Setter Property="Opacity" Value="0.5"/>
-            <Setter Property="TextDecorations" Value="Strikethrough"/>
-        </Style>
-    </Window.Styles>
+    <Grid Margin="20,30,20,20" RowDefinitions="Auto,Auto,*,Auto">
 
-    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="24" VerticalAlignment="Top">
-
-        <!-- Title -->
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,32">
-            <TextBlock Text="My Tasks" FontSize="36" FontWeight="Bold" Foreground="#1976D2" HorizontalAlignment="Center"/>
-            <TextBlock Text="Stay organized and productive" FontSize="15" Foreground="#666666" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+        <!-- Sarlavha -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,40">
+            <TextBlock Text="My Tasks" FontSize="32" FontWeight="Bold" Foreground="Black"/>
+            <TextBlock Text="Stay organized and productive" FontSize="14" Foreground="#666666" Margin="0,8,0,0"/>
         </StackPanel>
 
-        <!-- Add Task Bar -->
-        <Border Grid.Row="1" Background="White" CornerRadius="16" Padding="8" Margin="0,0,0,24"
-                BoxShadow="0 8 32 0 #1A000000">
-            <Grid ColumnDefinitions="*,Auto">
-                <TextBox x:Name="txtTaskInput"
-                         Watermark="Add new task..."
-                         FontSize="16"
-                         Padding="16,14"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         CornerRadius="12"/>
-                <Button Grid.Column="1" Content="+" FontSize="28" Classes="add" Click="btnAdd_Click"/>
-            </Grid>
+        <!-- Input + Delete tugmasi -->
+        <Border Grid.Row="1" Background="White" CornerRadius="30" Padding="20" Margin="0,0,0,30"
+                BoxShadow="0 10 40 0 #22000000">
+            <StackPanel Spacing="20">
+
+                <!-- Yangi vazifa qo'shish -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBox x:Name="txtTaskInput"
+                             Watermark="Add new task..."
+                             FontSize="16"
+                             Padding="30,18"
+                             Background="#F5F5F5"
+                             BorderThickness="0"
+                             CornerRadius="30"/>
+                    <Button Grid.Column="1" Content="+" 
+                            Width="64" Height="64"
+                            Background="#2196F3" Foreground="White"
+                            FontSize="34" FontWeight="Bold"
+                            CornerRadius="32"
+                            Click="btnAdd_Click"/>
+                </Grid>
+
+                <!-- Delete Completed Tasks (to'g'ri Button ichida!) -->
+                <Button Background="#FFEBEE" CornerRadius="30" Padding="30,16" Click="btnRemove_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+                        <TextBlock Text="🗑️" FontSize="22"/>
+                        <TextBlock Text="Delete Completed Tasks" 
+                                   Foreground="#E91E63" FontWeight="SemiBold" FontSize="15"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </Border>
 
-        <!-- Delete Completed Button -->
-        <Button Grid.Row="2" Content="Delete Completed Tasks" Classes="delete"
-                HorizontalAlignment="Center" Margin="0,0,0,16" Padding="20,10"
-                Click="btnRemove_Click"/>
-
-        <!-- Tasks List -->
-        <Border Grid.Row="3" Background="White" CornerRadius="16" BoxShadow="0 8 32 0 #1A000000" Margin="0,0,0,16">
-            <ScrollViewer Padding="8">
-                <ItemsControl x:Name="lstTasks" Margin="8">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="#FAFAFA" CornerRadius="12" Margin="0,6" Padding="16"
-                                    BoxShadow="0 2 10 0 #11000000">
-                                <Grid ColumnDefinitions="Auto,*,Auto">
-                                    <!-- Checkbox -->
-                                    <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center"/>
-
-                                    <!-- Task Text + ID -->
-                                    <StackPanel Grid.Column="1" Margin="16,0">
-                                        <TextBlock Text="{Binding Text}"
-                                                   FontSize="16"
-                                                   Classes.completed="{Binding IsChecked}"/>
-                                        <TextBlock Text="{Binding Id, StringFormat='#{0}'}"
-                                                   Foreground="#999999" FontSize="12" Margin="0,4,0,0"/>
-                                    </StackPanel>
-
-                                    <!-- Status Badge -->
-                                    <Border Grid.Column="2"
-                                            Background="{Binding Status, Converter={StaticResource StatusToColorConverter}}"
-                                            CornerRadius="20" Padding="12,6" MinWidth="90">
+        <!-- Vazifalar ro'yxati -->
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl x:Name="lstTasks" Margin="0,0,0,20">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Bitta Border ichida hamma narsa -->
+                        <Border Background="White" 
+                                CornerRadius="30" 
+                                Margin="0,12" 
+                                Padding="24,20"
+                                BoxShadow="0 8 30 0 #1F000000">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <!-- Status badge + checkbox ichida -->
+                                <Border Background="{Binding Status, Converter={StaticResource StatusToColorConverter}}"
+                                        CornerRadius="30" 
+                                        Padding="20,14" 
+                                        Margin="0,0,24,0">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <CheckBox IsChecked="{Binding IsChecked}" 
+                                                  VerticalAlignment="Center"/>
                                         <TextBlock Text="{Binding Status}"
-                                                   Foreground="White"
-                                                   FontSize="12"
-                                                   FontWeight="SemiBold"
-                                                   HorizontalAlignment="Center"/>
-                                    </Border>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Border>
+                                                   Foreground="White" 
+                                                   FontWeight="SemiBold" 
+                                                   FontSize="15"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
 
-        <!-- Stats -->
-        <TextBlock Grid.Row="4"
-                   Text="{Binding ElementName=lstTasks, Path=Items.Count, StringFormat='{}Completed: {0} of {1} tasks'}"
-                   Foreground="#666666" FontSize="15" HorizontalAlignment="Center" Margin="0,10"/>
+                                <!-- Vazifa matni + #ID -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Text}" FontSize="17" Foreground="#212121"/>
+                                    <TextBlock Text="{Binding Id, StringFormat='#{0}'}"
+                                               Foreground="#999999" FontSize="13" Margin="0,6,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Statistika -->
+        <TextBlock x:Name="StatsText" Grid.Row="3"
+                   Text="0 of 0 tasks completed"
+                   Foreground="#666666" FontSize="15" HorizontalAlignment="Center"/>
     </Grid>
 </Window>

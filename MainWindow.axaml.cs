@@ -667,6 +667,15 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         lstTasks.ItemsSource = Tasks;
+        Tasks.CollectionChanged += (_, __) => UpdateStats();
+        UpdateStats();
+    }
+
+    private void UpdateStats()
+    {
+        var completed = Tasks.Count(t => t.IsChecked);
+        var total = Tasks.Count;
+        StatsText.Text = $"{completed} of {total} tasks completed";
     }
 
     private void btnAdd_Click(object? sender, RoutedEventArgs e)
@@ -678,11 +687,12 @@ public partial class MainWindow : Window
         {
             Id = nextId++,
             Text = text,
-            Status = "Active",
-            IsChecked = false
+            IsChecked = false,
+            Status = "Active"
         });
 
-        txtTaskInput.Text = string.Empty;
+        txtTaskInput.Text = "";
+        UpdateStats();
     }
 
     private void btnRemove_Click(object? sender, RoutedEventArgs e)
@@ -692,5 +702,6 @@ public partial class MainWindow : Window
             if (Tasks[i].IsChecked)
                 Tasks.RemoveAt(i);
         }
+        UpdateStats();
     }
 }
